@@ -29,6 +29,13 @@ class CAS_CF_Database {
 		dbDelta( $sql );
 	}
 
+	public static function drop_table() {
+		global $wpdb;
+		$table = $wpdb->prefix . CAS_CF_TABLE;
+		$wpdb->query( "DROP TABLE IF EXISTS {$table}" );
+		delete_option( 'cas_cf_db_version' );
+	}
+
 	public static function insert( array $data ) {
 		global $wpdb;
 		$table = $wpdb->prefix . CAS_CF_TABLE;
