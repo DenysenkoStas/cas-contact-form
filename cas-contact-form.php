@@ -1,11 +1,13 @@
 <?php
+/**
+ * Plugin Name: CAS Contact Form
+ * Plugin URI:  https://github.com/DenysenkoStas/cas-contact-form
+ * Description: A multi-step contact form via shortcode [cas_contact_form].
+ * Version:     1.0.0
+ * Author:      Stas Denysenko
+ * Author URI:  https://github.com/DenysenkoStas
+ * License:     GPL-2.0+
+ * Text Domain: cas-contact-form
+ */
 
-/*
-Plugin Name: Cas Contact Form
-Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
-Description: A brief description of the Plugin.
-Version: 1.0
-Author: STAS
-Author URI: http://URI_Of_The_Plugin_Author
-License: A "Slug" license name e.g. GPL2
-*/
+defined( 'ABSPATH' ) || exit;
