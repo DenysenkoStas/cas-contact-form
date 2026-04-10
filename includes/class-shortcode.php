@@ -34,7 +34,7 @@ class CAS_CF_Shortcode {
 			wp_enqueue_script(
 				'cas-cf-script',
 				CAS_CF_URL . 'assets/js/form.js',
-				[ 'jquery', 'bootstrap' ],
+				[ 'bootstrap' ],
 				CAS_CF_VERSION,
 				true
 			);
