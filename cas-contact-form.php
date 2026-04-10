@@ -24,3 +24,6 @@ require_once CAS_CF_PATH . 'includes/class-email.php';
 require_once CAS_CF_PATH . 'admin/class-admin-page.php';
 
 register_activation_hook( __FILE__, [ 'CAS_CF_Database', 'create_table' ] );
+
+new CAS_CF_Shortcode();
+new CAS_CF_Ajax_Handler();
