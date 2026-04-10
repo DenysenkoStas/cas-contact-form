@@ -71,10 +71,21 @@ cas-contact-form/
 
 ## Screenshots
 
-- `screenshot-1.png` — Step 1: Personal Info
-- `screenshot-2.png` — Step 2: Address
-- `screenshot-3.png` — Step 3: Confirmation
-- `screenshot-4.png` — Admin submissions page
+*Personal Info step*
+
+![Personal Info step](screenshots/screenshot-1.png)
+
+*Address step*
+
+![Address step](screenshots/screenshot-2.png)
+
+*Confirmation step*
+
+![Confirmation step](screenshots/screenshot-3.png)
+
+*Admin submissions page*
+
+![Admin submissions page](screenshots/screenshot-4.png)
 
 ---
 

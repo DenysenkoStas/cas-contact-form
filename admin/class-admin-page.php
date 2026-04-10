@@ -45,81 +45,87 @@ class CAS_CF_Admin_Page {
 		$total_pages = ceil( $total / $per_page );
 		?>
 
-      <div class="wrap">
-        <h1>
-          <span class="dashicons dashicons-email-alt"></span>
-			<?php esc_html_e( 'CAS Contact Form — Submissions', 'cas-contact-form' ); ?>
-        </h1>
+		<div class="cas-admin-wrap wrap">
+			<h1>
+				<span class="dashicons dashicons-email-alt"></span>
+				<?php esc_html_e( 'CAS Contact Form — Submissions', 'cas-contact-form' ); ?>
+			</h1>
 
-        <p class="description">
-			<?php printf(
-				__( 'Total submissions: %d', 'cas-contact-form' ),
-				(int) $total
-			); ?>
-        </p>
+			<p class="description">
+				<?php printf(
+					__( 'Total submissions: %d', 'cas-contact-form' ),
+					(int) $total
+				); ?>
+			</p>
 
-		  <?php if ( empty( $submissions ) ) : ?>
+			<?php if ( empty( $submissions ) ) : ?>
 
-            <p><?php esc_html_e( 'No submissions yet.', 'cas-contact-form' ); ?></p>
+				<p><?php esc_html_e( 'No submissions yet.', 'cas-contact-form' ); ?></p>
 
-		  <?php else : ?>
+			<?php else : ?>
 
-            <table class="widefat striped">
-              <thead>
-              <tr>
-                <th><?php esc_html_e( '#', 'cas-contact-form' ); ?></th>
-                <th><?php esc_html_e( 'Date', 'cas-contact-form' ); ?></th>
-                <th><?php esc_html_e( 'Name', 'cas-contact-form' ); ?></th>
-                <th><?php esc_html_e( 'Email', 'cas-contact-form' ); ?></th>
-                <th><?php esc_html_e( 'Phone', 'cas-contact-form' ); ?></th>
-                <th><?php esc_html_e( 'Country', 'cas-contact-form' ); ?></th>
-                <th><?php esc_html_e( 'City', 'cas-contact-form' ); ?></th>
-                <th><?php esc_html_e( 'Newsletter', 'cas-contact-form' ); ?></th>
-              </tr>
-              </thead>
-              <tbody>
-			  <?php foreach ( $submissions as $row ) : ?>
-                <tr>
-                  <td><?php echo esc_html( $row['id'] ); ?></td>
-                  <td><?php echo esc_html( wp_date(
-						  get_option( 'date_format' ) . ' ' . get_option( 'time_format' ),
-						  strtotime( $row['submitted_at'] )
-					  ) ); ?></td>
-                  <td><?php echo esc_html( $row['first_name'] . ' ' . $row['last_name'] ); ?></td>
-                  <td>
-                    <a href="mailto:<?php echo esc_attr( $row['email'] ); ?>">
-						<?php echo esc_html( $row['email'] ); ?>
-                    </a>
-                  </td>
-                  <td><?php echo esc_html( $row['phone'] ); ?></td>
-                  <td><?php echo esc_html( $row['country'] ); ?></td>
-                  <td><?php echo esc_html( $row['city'] ); ?></td>
-                  <td>
-					  <?php echo $row['newsletter']
-						  ? '<span class="cas-badge-yes">Yes</span>'
-						  : '<span class="cas-badge-no">No</span>';
-					  ?>
-                  </td>
-                </tr>
-			  <?php endforeach; ?>
-              </tbody>
-            </table>
+				<table class="widefat striped">
+					<thead>
+					<tr>
+						<th><?php esc_html_e( '#', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'Date', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'Name', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'Email', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'Phone', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'Date of birth', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'Country', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'City', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'Street', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'ZIP', 'cas-contact-form' ); ?></th>
+						<th><?php esc_html_e( 'Newsletter', 'cas-contact-form' ); ?></th>
+					</tr>
+					</thead>
+					<tbody>
+					<?php foreach ( $submissions as $row ) : ?>
+						<tr>
+							<td><?php echo esc_html( $row['id'] ); ?></td>
+							<td><?php echo esc_html( wp_date(
+									get_option( 'date_format' ) . ' ' . get_option( 'time_format' ),
+									strtotime( $row['submitted_at'] )
+								) ); ?></td>
+							<td><?php echo esc_html( $row['first_name'] . ' ' . $row['last_name'] ); ?></td>
+							<td>
+								<a href="mailto:<?php echo esc_attr( $row['email'] ); ?>">
+									<?php echo esc_html( $row['email'] ); ?>
+								</a>
+							</td>
+							<td><?php echo esc_html( $row['phone'] ); ?></td>
+							<td><?php echo esc_html( $row['date_of_birth'] ?? '—' ); ?></td>
+							<td><?php echo esc_html( $row['country'] ); ?></td>
+							<td><?php echo esc_html( $row['city'] ); ?></td>
+							<td><?php echo esc_html( $row['street'] ?: '—' ); ?></td>
+							<td><?php echo esc_html( $row['zip'] ?: '—' ); ?></td>
+							<td>
+								<?php echo $row['newsletter']
+									? '<span class="cas-badge-yes">Yes</span>'
+									: '<span class="cas-badge-no">No</span>';
+								?>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
 
-			  <?php if ( $total_pages > 1 ) : ?>
-              <div class="tablenav bottom">
-				  <?php echo paginate_links( [
-					  'base'      => add_query_arg( 'paged', '%#%' ),
-					  'format'    => '',
-					  'prev_text' => '&laquo;',
-					  'next_text' => '&raquo;',
-					  'total'     => $total_pages,
-					  'current'   => $current,
-				  ] ); ?>
-              </div>
-			  <?php endif; ?>
+				<?php if ( $total_pages > 1 ) : ?>
+					<div class="tablenav bottom">
+						<?php echo paginate_links( [
+							'base'      => add_query_arg( 'paged', '%#%' ),
+							'format'    => '',
+							'prev_text' => '&laquo;',
+							'next_text' => '&raquo;',
+							'total'     => $total_pages,
+							'current'   => $current,
+						] ); ?>
+					</div>
+				<?php endif; ?>
 
-		  <?php endif; ?>
-      </div>
+			<?php endif; ?>
+		</div>
 
 		<?php
 	}
