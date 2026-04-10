@@ -1,0 +1,49 @@
+.cas-cf-wrapper {
+  margin: 2rem auto;
+  max-width: 560px;
+}
+
+.cas-cf-panel {
+  display: none;
+}
+
+.cas-cf-panel.active {
+  display: block;
+}
+
+.cas-cf-steps {
+  gap: 0;
+}
+
+.cas-cf-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #6c757d;
+  background: #ffffff;
+  border: 2px solid #dee2e6;
+  border-radius: 50%;
+  transition: color .3s, background .3s, border-color .3s;
+}
+
+.cas-cf-step.active,
+.cas-cf-step.completed {
+  color: #ffffff;
+  background: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.cas-cf-step-line {
+  width: 48px;
+  height: 2px;
+  background: #dee2e6;
+  transition: background .3s;
+}
+
+.cas-cf-step-line.active {
+  background: #0d6efd;
+}
