@@ -11,3 +11,8 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+define( 'CAS_CF_VERSION', '1.0.0' );
+define( 'CAS_CF_PATH', plugin_dir_path( __FILE__ ) );
+define( 'CAS_CF_URL', plugin_dir_url( __FILE__ ) );
+define( 'CAS_CF_TABLE', 'cas_contact_submissions' );
