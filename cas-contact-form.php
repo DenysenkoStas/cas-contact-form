@@ -27,3 +27,4 @@ register_activation_hook( __FILE__, [ 'CAS_CF_Database', 'create_table' ] );
 
 new CAS_CF_Shortcode();
 new CAS_CF_Ajax_Handler();
+new CAS_CF_Admin_Page();
