@@ -28,4 +28,49 @@ class CAS_CF_Database {
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 	}
+
+	public static function insert( array $data ) {
+		global $wpdb;
+		$table = $wpdb->prefix . CAS_CF_TABLE;
+
+		$result = $wpdb->insert(
+			$table,
+			[
+				'first_name'    => sanitize_text_field( $data['first_name'] ),
+				'last_name'     => sanitize_text_field( $data['last_name'] ),
+				'email'         => sanitize_email( $data['email'] ),
+				'phone'         => sanitize_text_field( $data['phone'] ),
+				'date_of_birth' => ! empty( $data['date_of_birth'] ) ? sanitize_text_field( $data['date_of_birth'] ) : null,
+				'country'       => sanitize_text_field( $data['country'] ),
+				'city'          => sanitize_text_field( $data['city'] ),
+				'street'        => sanitize_text_field( $data['street'] ?? '' ),
+				'zip'           => sanitize_text_field( $data['zip'] ?? '' ),
+				'newsletter'    => ! empty( $data['newsletter'] ) ? 1 : 0,
+			],
+			[ '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d' ]
+		);
+
+		return $result ? $wpdb->insert_id : false;
+	}
+
+	public static function get_all( int $limit = 50, int $offset = 0 ): array {
+		global $wpdb;
+		$table = $wpdb->prefix . CAS_CF_TABLE;
+
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT * FROM {$table} ORDER BY submitted_at DESC LIMIT %d OFFSET %d",
+				$limit,
+				$offset
+			),
+			ARRAY_A
+		);
+	}
+
+	public static function count(): int {
+		global $wpdb;
+		$table = $wpdb->prefix . CAS_CF_TABLE;
+
+		return (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" );
+	}
 }
