@@ -13,15 +13,28 @@ class CAS_CF_Shortcode {
 
 		if ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'cas_contact_form' ) ) {
 			wp_enqueue_style(
+				'bootstrap',
+				'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
+				[],
+				'5.3.0'
+			);
+			wp_enqueue_style(
 				'cas-cf-style',
 				CAS_CF_URL . 'assets/css/form.css',
-				[],
+				[ 'bootstrap' ],
 				CAS_CF_VERSION
+			);
+			wp_enqueue_script(
+				'bootstrap',
+				'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
+				[],
+				'5.3.0',
+				true
 			);
 			wp_enqueue_script(
 				'cas-cf-script',
 				CAS_CF_URL . 'assets/js/form.js',
-				[ 'jquery' ],
+				[ 'jquery', 'bootstrap' ],
 				CAS_CF_VERSION,
 				true
 			);
