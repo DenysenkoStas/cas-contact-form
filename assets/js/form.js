@@ -80,7 +80,7 @@ function goTo(step) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-
+  // Navigation
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-next]')) {
       goTo(parseInt(e.target.closest('[data-next]').dataset.next, 10));
@@ -90,4 +90,86 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  // Form submission
+  const form = document.getElementById('cas-contact-form');
+  const submitBtn = document.getElementById('cas-cf-submit');
+  const successMsg = document.getElementById('cas-cf-success');
+  const serverErr = document.getElementById('cas-cf-server-error');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (!validatePanel(3)) {
+      return;
+    }
+
+    serverErr.style.display = 'none';
+    serverErr.textContent = '';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+
+    const formData = new FormData(form);
+    formData.append('action', 'cas_cf_submit');
+    formData.append('nonce', casCF.nonce);
+    formData.append('newsletter', document.getElementById('cas_newsletter').checked ? '1' : '0');
+    formData.append('terms', document.getElementById('cas_terms').checked ? '1' : '0');
+
+    fetch(casCF.ajaxUrl, {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(function (res) {
+        if (res.success) {
+          form.style.display = 'none';
+          document.querySelector('.cas-cf-steps').style.display = 'none';
+          successMsg.style.display = 'block';
+        } else {
+          handleServerErrors(res.data);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit ✓';
+        }
+      })
+      .catch(function () {
+        serverErr.textContent = 'An unexpected error occurred. Please try again.';
+        serverErr.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit ✓';
+      });
+  });
+
+  // Server-side error handling
+  function handleServerErrors(data) {
+    if (data && data.message) {
+      serverErr.textContent = data.message;
+      serverErr.style.display = 'block';
+    }
+
+    if (data && data.fields) {
+      const stepMap = {
+        first_name: 1, last_name: 1, email: 1, phone: 1,
+        country: 2, city: 2,
+        terms: 3
+      };
+
+      let firstStep = null;
+
+      Object.entries(data.fields).forEach(function ([field, msg]) {
+        const el = document.querySelector('[name="' + field + '"]');
+        if (el) el.classList.add('is-invalid');
+
+        const errEl = document.getElementById('err-' + field);
+        if (errEl) errEl.textContent = msg;
+
+        const step = stepMap[field] || 1;
+        if (firstStep === null || step < firstStep) {
+          firstStep = step;
+        }
+      });
+
+      if (firstStep !== null) {
+        goTo(firstStep);
+      }
+    }
+  }
 });
